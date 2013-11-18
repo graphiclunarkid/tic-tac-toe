@@ -15,3 +15,9 @@ class Game():
 	turns = property(get_turns)
 
 
+class Player():
+
+	def __init__(self, squares = []):
+		self.squares = squares
+
+
