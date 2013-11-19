@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 
 import unittest
@@ -24,9 +24,13 @@ class TicTacToeTestCase(unittest.TestCase):
 	def testPlayer(self):
 		self.assertIsInstance(self.p1,tictactoe.Player)
 		self.assertEqual(self.p1.squares,[])
-		self.p1.move()
+		move1 = [0,0]
+		self.p1.move(move1)
 		self.assertEqual(self.game.turns,(self.cols*self.rows - 1))
 		self.assertEqual(len(self.p1.squares),1)
+		self.assertListEqual(self.p1.squares, [move1])
+		self.assertListEqual(self.game.board,[[0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]])
+
 
 if __name__ == '__main__':
 	unittest.main()

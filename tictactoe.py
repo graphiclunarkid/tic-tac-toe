@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 
 class Game():
@@ -21,5 +21,5 @@ class Player():
 		self.game = game
 		self.squares = squares
 
-	def move(self):
-		self.squares.append(self.game.board.pop())
+	def move(self, square):
+		self.squares.append(self.game.board.pop(self.game.board.index(square)))
