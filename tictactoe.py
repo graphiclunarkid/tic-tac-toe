@@ -22,4 +22,4 @@ class Player():
 		self.squares = squares
 
 	def move(self):
-		self.game.board.pop()
+		self.squares.append(self.game.board.pop())

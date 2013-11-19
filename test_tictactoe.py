@@ -26,6 +26,7 @@ class TicTacToeTestCase(unittest.TestCase):
 		self.assertEqual(self.p1.squares,[])
 		self.p1.move()
 		self.assertEqual(self.game.turns,(self.cols*self.rows - 1))
+		self.assertEqual(len(self.p1.squares),1)
 
 if __name__ == '__main__':
 	unittest.main()
