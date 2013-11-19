@@ -12,9 +12,9 @@ class TicTacToeTestCase(unittest.TestCase):
 		self.cols = 3
 		self.rows = 3
 		self.game = tictactoe.Game(self.players, self.cols, self.rows)
+		self.p1 = tictactoe.Player()
 
 	def testGame(self):
-		self.game = tictactoe.Game()
 		self.assertIsInstance(self.game,tictactoe.Game)
 		self.assertEqual(self.game.players,self.players)
 		self.assertEqual(self.game.cols,self.cols)
@@ -22,9 +22,8 @@ class TicTacToeTestCase(unittest.TestCase):
 		self.assertEqual(self.game.turns,(self.cols*self.rows))
 
 	def testPlayer(self):
-		self.player = tictactoe.Player()
-		self.assertIsInstance(self.player,tictactoe.Player)
-		self.assertEqual(self.player.squares,[])
+		self.assertIsInstance(self.p1,tictactoe.Player)
+		self.assertEqual(self.p1.squares,[])
 
 
 if __name__ == '__main__':
