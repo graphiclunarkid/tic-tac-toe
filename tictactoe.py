@@ -17,7 +17,9 @@ class Game():
 
 class Player():
 
-	def __init__(self, squares = []):
+	def __init__(self, game, squares = []):
+		self.game = game
 		self.squares = squares
 
-
+	def move(self):
+		self.game.board.pop()
