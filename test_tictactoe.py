@@ -14,16 +14,22 @@ class TicTacToeTestCase(unittest.TestCase):
 		self.game = tictactoe.Game(self.players, self.cols, self.rows)
 		self.p1 = tictactoe.Player(self.game)
 
-	def testGame(self):
+	def tearDown(self):
+		self.game = None
+		self.p1 = None
+
+	def test_game(self):
 		self.assertIsInstance(self.game,tictactoe.Game)
 		self.assertEqual(self.game.players,self.players)
 		self.assertEqual(self.game.cols,self.cols)
 		self.assertEqual(self.game.rows,self.rows)
 		self.assertEqual(self.game.turns,(self.cols*self.rows))
 
-	def testPlayer(self):
+	def test_player(self):
 		self.assertIsInstance(self.p1,tictactoe.Player)
 		self.assertEqual(self.p1.squares,[])
+
+	def test_move(self):
 		move1 = [0,0]
 		self.p1.move(move1)
 		self.assertEqual(self.game.turns,(self.cols*self.rows - 1))
