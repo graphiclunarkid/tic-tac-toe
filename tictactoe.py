@@ -17,8 +17,10 @@ class Game():
 
 class Player():
 
-	def __init__(self, game, squares = []):
+	def __init__(self, game, squares = None):
 		self.game = game
+		if squares is None:
+			squares = []	# Per "default parameter values in python"
 		self.squares = squares
 
 	def move(self, square):
