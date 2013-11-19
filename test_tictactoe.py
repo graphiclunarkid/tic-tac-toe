@@ -39,12 +39,12 @@ class TicTacToeTestCase(unittest.TestCase):
 
 	def test_illegal_move(self):
 		move1 = [-1,-1]
-		self.assertRaises(ValueError, self.p1.move(move1))
+		self.assertRaises(ValueError, self.p1.move, move1)
 
 	def test_repeat_move(self):
 		move1 = [0,0]
 		self.p1.move(move1)
-		self.assertRaises(ValueError, self.p1.move(move1))
+		self.assertRaises(ValueError, self.p1.move, move1)
 
 
 if __name__ == '__main__':
