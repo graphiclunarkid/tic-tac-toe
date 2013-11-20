@@ -7,7 +7,9 @@ class Game():
 		self.players = players
 		self.cols = cols
 		self.rows = rows
-		self.board = [[x,y] for x in range(cols) for y in range(rows)]
+		self.board = [(x, y) for x in range(cols) for y in range(rows)]
+		self.winner = None
+		self.winmoves = frozenset(((0,0),(0,1),(0,2)))
 
 	def get_turns(self):
 		return len(self.board)
@@ -25,3 +27,5 @@ class Player():
 
 	def move(self, square):
 		self.squares.append(self.game.board.pop(self.game.board.index(square)))
+		if set(map(tuple, self.squares)) == self.game.winmoves:
+			self.game.winner = self
