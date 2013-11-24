@@ -115,10 +115,21 @@ class Test_Gameplay(unittest.TestCase):
 
 	def test_win_conditions_long(self):
 		# Longer move sequences containing winning sets
-		self.moveList.append( [ 9, 1, 6, 7, 3, 2 ] )
-#		self.moveList.append( [ 1, 3, 7, 9, 5] )
-#		self.moveList.append( [ 2, 4, 6, 8, 9, 5] )
+		self.moveList.append( [ 9, 1, 6, 7, 8 ] )
+		self.moveList.append( [ 1, 3, 7, 9, 5 ] )
+		self.moveList.append( [ 2, 4, 6, 8, 5 ] )
 		self.doMoves()
+
+	def test_draw_conditions(self):
+		# Should result in a draw (i.e. no win condition contained in set)
+		self.moveList.append( [ 5, 9, 2, 4, 7 ] )
+		self.moveList.append( [ 7, 1, 6, 2, 8 ] )
+		for moves in self.moveList:
+			g = tictactoe.Game(1)
+			for move in moves:
+				g.playerList[0].move(move)
+			self.assertIs(g.winner, None)
+			g = None
 
 
 if __name__ == '__main__':
