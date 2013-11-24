@@ -12,8 +12,9 @@ class TicTacToeTestCase(unittest.TestCase):
 		self.players = 2
 		self.cols = 3
 		self.rows = 3
-		self.board = tictactoe.Board(self.players, self.cols, self.rows)
-		self.p1 = tictactoe.Player(self.board)
+		self.board = tictactoe.Board(self.cols, self.rows)
+		self.game = tictactoe.Game(self.players)
+		self.p1 = tictactoe.Player(self.board, self.game)
 
 	def tearDown(self):
 		self.board = None
@@ -27,7 +28,6 @@ class Test_Structure(TicTacToeTestCase):
 
 	def test_board(self):
 		self.assertIsInstance(self.board,tictactoe.Board)
-		self.assertEqual(self.board.players,self.players)
 		self.assertEqual(self.board.cols,self.cols)
 		self.assertEqual(self.board.rows,self.rows)
 		self.assertEqual(self.board.turns,(self.cols*self.rows))
@@ -36,13 +36,16 @@ class Test_Structure(TicTacToeTestCase):
 		self.assertIsInstance(self.p1,tictactoe.Player)
 		self.assertEqual(self.p1.squares,[])
 
+	def test_game(self):
+		self.assertEqual(self.game.players,self.players)
+
 
 class Test_Behaviour(TicTacToeTestCase):
 	"""Test module objects behave correctly when their methods are called"""
 
 	def setUp(self):
 		super().setUp()
-		self.p2 = tictactoe.Player(self.board)
+		self.p2 = tictactoe.Player(self.board, self.game)
 
 	def tearDown(self):
 		super().tearDown()
@@ -87,7 +90,7 @@ class Test_Gameplay(TicTacToeTestCase):
 		moves = [square for square in self.board.squares if square[0] == 0]
 		for move in moves:
 			self.p1.move(move)
-		self.assertIs(self.p1,self.board.winner)
+		self.assertIs(self.p1,self.game.winner)
 
 
 if __name__ == '__main__':
