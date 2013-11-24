@@ -29,7 +29,10 @@ class Player():
 		try:
 			self.squares.append(self.game.board.pop(self.game.board.index(square)))
 		except ValueError:
-			raise MoveError('Square not available')
+			if square in self.squares:
+				raise MoveError("You have taken that square already!")
+			else:
+				raise MoveError("That square isn't on the board!")
 		else:
 			if set(map(tuple, self.squares)) == self.game.winmoves:
 				self.game.winner = self

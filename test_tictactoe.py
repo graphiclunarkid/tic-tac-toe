@@ -42,12 +42,15 @@ class TicTacToeTestCase(unittest.TestCase):
 		with self.assertRaises(tictactoe.MoveError) as cm:
 			self.p1.move(move1)
 		e = cm.exception
-		self.assertEqual(e.msg, 'Square not available')
+		self.assertEqual(e.msg, "That square isn't on the board!")
 
 	def test_repeat_move(self):
 		move1 = (0,0)
-		self.p1.move(move1)
-		self.assertRaises(tictactoe.MoveError, self.p1.move, move1)
+		with self.assertRaises(tictactoe.MoveError) as cm:
+			self.p1.move(move1)
+			self.p1.move(move1)
+		e = cm.exception
+		self.assertEqual(e.msg, "You have taken that square already!")
 
 	def test_win_condition(self):
 		moves = [square for square in self.game.board if square[0] == 0]
