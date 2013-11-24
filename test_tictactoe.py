@@ -39,15 +39,15 @@ class TicTacToeTestCase(unittest.TestCase):
 
 	def test_illegal_move(self):
 		move1 = (-1,-1)
-		with self.assertRaises(ValueError) as contextManager:
+		with self.assertRaises(tictactoe.MoveError) as cm:
 			self.p1.move(move1)
-		exception = contextManager.exception
-		self.assertEqual(exception.message, 'Square not available')
+		e = cm.exception
+		self.assertEqual(e.msg, 'Square not available')
 
 	def test_repeat_move(self):
 		move1 = (0,0)
 		self.p1.move(move1)
-		self.assertRaises(ValueError, self.p1.move, move1)
+		self.assertRaises(tictactoe.MoveError, self.p1.move, move1)
 
 	def test_win_condition(self):
 		moves = [square for square in self.game.board if square[0] == 0]

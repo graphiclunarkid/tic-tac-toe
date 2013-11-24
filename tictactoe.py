@@ -28,10 +28,24 @@ class Player():
 	def move(self, square):
 		try:
 			self.squares.append(self.game.board.pop(self.game.board.index(square)))
-		except ValueError as e:
-			e.message = 'Square not available'
-			raise
+		except ValueError:
+			raise MoveError('Square not available')
 		else:
 			if set(map(tuple, self.squares)) == self.game.winmoves:
 				self.game.winner = self
 
+
+class Error(Exception):
+	"""Base class for exceptions in this module"""
+	pass
+
+
+class MoveError(Error):
+	"""Exception raised for invalid player moves
+
+	Attributes:
+		msg -- explanation of the error
+	"""
+	
+	def __init__(self, msg):
+		self.msg = msg
