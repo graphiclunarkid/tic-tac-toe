@@ -60,7 +60,7 @@ class Test_Behaviour(TicTacToeTestCase):
 			self.game.playerList[0].move(move1)
 			self.game.playerList[0].move(move1)
 		e = cm.exception
-		self.assertEqual(e.msg, "You have taken that square already!")
+		self.assertEqual(e.msg, "You have taken that square already")
 
 	def test_repeat_move_other_player(self):
 		move1 = 1
@@ -68,7 +68,7 @@ class Test_Behaviour(TicTacToeTestCase):
 			self.game.playerList[0].move(move1)
 			self.game.playerList[1].move(move1)
 		e = cm.exception
-		self.assertEqual(e.msg, "Another player has taken that square already!")
+		self.assertEqual(e.msg, "The other player has taken that square already")
 
 
 class Test_Gameplay(unittest.TestCase):
