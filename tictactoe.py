@@ -3,7 +3,7 @@
 
 class Board():
 
-	def __init__(self, cols = 3, rows = 3):
+	def __init__(self, cols, rows):
 		self.cols = cols
 		self.rows = rows
 		self.squares = [(x, y) for x in range(cols) for y in range(rows)]
