@@ -3,7 +3,7 @@
 
 class Board():
 
-	""" A class to represent a tic-tac-toe board, which comprises 9 squares
+	""" A class to represent a tic-tac-toe board, which comprises 9 squares.
 
 	Attributes:
 		squares -- List of squares that are available to be picked.
@@ -109,8 +109,7 @@ class Game():
 
 class Error(Exception):
 
-	""" Base class for exceptions in this module.
-	"""
+	""" Base class for exceptions in this module. """
 	
 	pass
 

@@ -7,8 +7,7 @@ import tictactoe
 
 class TicTacToeTestCase(unittest.TestCase):
 
-	""" Base class for structure and behaviour test-case classes in this
-	module.
+	""" Base class for structure & behaviour test-case classes in this module.
 
 	Methods:
 		setUp -- Creates a tictactoe game instance with the specified
@@ -29,6 +28,7 @@ class TicTacToeTestCase(unittest.TestCase):
 class Test_Structure(TicTacToeTestCase):
 
 	""" Test class that helped in building objects needed for this module.
+
 	These tests aren't very useful any more but cost nothing to keep.
 
 	Methods:
@@ -56,7 +56,7 @@ class Test_Structure(TicTacToeTestCase):
 
 class Test_Behaviour(TicTacToeTestCase):
 
-	""" Test module objects behave correctly when their methods are called
+	""" Test module objects behave correctly when their methods are called.
 	
 	Methods:
 		setUp -- Overrides base class setUp to instantiate a two-player game.
@@ -116,9 +116,12 @@ class Test_Behaviour(TicTacToeTestCase):
 
 
 class Test_Gameplay(unittest.TestCase):
+
 	""" Tests that the game runs correctly.
+
 	Actually just tests that win and draw conditions are correct at the
 	moment.
+
 	TODO: Test that turns alternate correctly
 	NOTE: This class is not a subclass of TicTacToeTestCase
 
