@@ -39,7 +39,10 @@ class TicTacToeTestCase(unittest.TestCase):
 
 	def test_illegal_move(self):
 		move1 = (-1,-1)
-		self.assertRaises(ValueError, self.p1.move, move1)
+		with self.assertRaises(ValueError) as contextManager:
+			self.p1.move(move1)
+		exception = contextManager.exception
+		self.assertEqual(exception.message, 'Square not available')
 
 	def test_repeat_move(self):
 		move1 = (0,0)

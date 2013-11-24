@@ -21,11 +21,17 @@ class Player():
 
 	def __init__(self, game, squares = None):
 		self.game = game
-		if squares is None:
-			squares = []	# Per "default parameter values in python"
+		if squares is None:	# Google for "default parameter values in python"
+			squares = []
 		self.squares = squares
 
 	def move(self, square):
-		self.squares.append(self.game.board.pop(self.game.board.index(square)))
-		if set(map(tuple, self.squares)) == self.game.winmoves:
-			self.game.winner = self
+		try:
+			self.squares.append(self.game.board.pop(self.game.board.index(square)))
+		except ValueError as e:
+			e.message = 'Square not available'
+			raise
+		else:
+			if set(map(tuple, self.squares)) == self.game.winmoves:
+				self.game.winner = self
+
