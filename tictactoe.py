@@ -4,7 +4,7 @@
 class Board():
 
 	def __init__(self):
-		self.squares = [(x, y) for x in range(3) for y in range(3)]
+		self.squares = [ x for x in range(1,10) ]
 		self.startSquares = list(self.squares)	# Copies the list rather than creating a second reference to it.
 
 	def get_turns(self):
@@ -32,7 +32,7 @@ class Player():
 			else:
 				raise MoveError("That square isn't on the board!")
 		else:
-			if set(map(tuple, self.squares)) == self.game.winMoves:
+			if set(self.squares) == self.game.winMoves:
 				self.game.winner = self
 
 
@@ -40,7 +40,7 @@ class Game():
 
 	def __init__(self, players = 2):
 		self.winner = None
-		self.winMoves = frozenset(((0,0),(0,1),(0,2)))
+		self.winMoves = frozenset( (1, 2, 3) )
 		self.board = Board()
 		self.playerList = [Player(self) for p in range(players)]
 
