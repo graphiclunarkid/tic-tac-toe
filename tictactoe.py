@@ -17,8 +17,7 @@ class Board():
 
 class Player():
 
-	def __init__(self, board, game, squares = None):
-		self.board = board
+	def __init__(self, game, squares = None):
 		self.game = game
 		if squares is None:	# Google for "default parameter values in python"
 			squares = []
@@ -26,11 +25,11 @@ class Player():
 
 	def move(self, square):
 		try:
-			self.squares.append(self.board.squares.pop(self.board.squares.index(square)))
+			self.squares.append(self.game.board.squares.pop(self.game.board.squares.index(square)))
 		except ValueError:
 			if square in self.squares:
 				raise MoveError("You have taken that square already!")
-			elif square in self.board.startSquares:
+			elif square in self.game.board.startSquares:
 				raise MoveError("Another player has taken that square already!")
 			else:
 				raise MoveError("That square isn't on the board!")
@@ -40,10 +39,11 @@ class Player():
 
 
 class Game():
-	def __init__(self, players = 2):
+	def __init__(self, players = 2, cols = 3, rows = 3):
 		self.players = players
 		self.winner = None
 		self.winMoves = frozenset(((0,0),(0,1),(0,2)))
+		self.board = Board(cols,rows)
 
 
 class Error(Exception):
