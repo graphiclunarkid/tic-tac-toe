@@ -39,11 +39,9 @@ class Player():
 		of picked squares contains a winning line.
 	"""
 
-	def __init__(self, game, squares = None):
+	def __init__(self, game):
 		self.game = game
-		if squares is None:	# Google for "default parameter values in python"
-			squares = []
-		self.squares = squares
+		self.squares = []
 
 	def move(self, square):
 		try:
