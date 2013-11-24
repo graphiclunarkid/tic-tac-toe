@@ -3,10 +3,8 @@
 
 class Board():
 
-	def __init__(self, cols, rows):
-		self.cols = cols
-		self.rows = rows
-		self.squares = [(x, y) for x in range(cols) for y in range(rows)]
+	def __init__(self):
+		self.squares = [ x for x in range(1,10) ]
 		self.startSquares = list(self.squares)	# Copies the list rather than creating a second reference to it.
 
 	def get_turns(self):
@@ -28,23 +26,40 @@ class Player():
 			self.squares.append(self.game.board.squares.pop(self.game.board.squares.index(square)))
 		except ValueError:
 			if square in self.squares:
-				raise MoveError("You have taken that square already!")
+				raise MoveError("You have taken that square already")
 			elif square in self.game.board.startSquares:
-				raise MoveError("Another player has taken that square already!")
+				raise MoveError("The other player has taken that square already")
 			else:
 				raise MoveError("That square isn't on the board!")
 		else:
-			if set(map(tuple, self.squares)) == self.game.winMoves:
-				self.game.winner = self
+			s = set(self.squares)
+			for line in self.game.winMoves:
+				if set(line).issubset(s):
+					self.game.winner = self
 
 
 class Game():
 
-	def __init__(self, players = 2, cols = 3, rows = 3):
+	def __init__(self, players = 2):
 		self.winner = None
-		self.winMoves = frozenset(((0,0),(0,1),(0,2)))
-		self.board = Board(cols,rows)
+		self.board = Board()
 		self.playerList = [Player(self) for p in range(players)]
+
+		self.winMoves = []
+
+		# Horizontal rows
+		self.winMoves.append( [ 1, 2, 3 ] ) 
+		self.winMoves.append( [ 4, 5, 6 ] ) 
+		self.winMoves.append( [ 7, 8, 9 ] ) 
+
+		# Vertical columns
+		self.winMoves.append( [ 1, 4, 7 ] ) 
+		self.winMoves.append( [ 2, 5, 8 ] ) 
+		self.winMoves.append( [ 3, 6, 9 ] ) 
+
+		# Diagonals
+		self.winMoves.append( [ 1, 5, 9 ] ) 
+		self.winMoves.append( [ 3, 5, 7 ] ) 
 
 	def get_players(self):
 		return len(self.playerList)
@@ -66,3 +81,27 @@ class MoveError(Error):
 	
 	def __init__(self, msg):
 		self.msg = msg
+
+
+def getMove(player):
+	squares = { "1":1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9 }
+	choice = input("Player " + str(player + 1) + ", pick a square (1-9): ")
+	try:
+		return squares[choice]
+	except KeyError:
+		pass
+
+
+if __name__ == '__main__':
+	g = Game()
+	while g.board.turns > 0 and g.winner is None:
+		currentPlayer = 1 - (g.board.turns % g.players)
+		move = getMove(currentPlayer)
+		try:
+			g.playerList[currentPlayer].move(move)
+		except MoveError as e:
+			print(e.msg)
+	if g.winner is None:
+		print("It's a draw!")
+	else:
+		print("Player", currentPlayer + 1, "wins!")
