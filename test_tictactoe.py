@@ -6,6 +6,7 @@ import tictactoe
 
 
 class TicTacToeTestCase(unittest.TestCase):
+	"""Base class for test cases in this module"""
 
 	def setUp(self):
 		self.players = 2
@@ -13,12 +14,16 @@ class TicTacToeTestCase(unittest.TestCase):
 		self.rows = 3
 		self.game = tictactoe.Game(self.players, self.cols, self.rows)
 		self.p1 = tictactoe.Player(self.game)
-		self.p2 = tictactoe.Player(self.game)
 
 	def tearDown(self):
 		self.game = None
 		self.p1 = None
-		self.p2 = None
+
+
+class Test_Structure(TicTacToeTestCase):
+	"""TDD: build objects needed for this module
+	These tests aren't very useful any more but cost nothing to keep
+	"""
 
 	def test_game(self):
 		self.assertIsInstance(self.game,tictactoe.Game)
@@ -30,6 +35,18 @@ class TicTacToeTestCase(unittest.TestCase):
 	def test_player(self):
 		self.assertIsInstance(self.p1,tictactoe.Player)
 		self.assertEqual(self.p1.squares,[])
+
+
+class Test_Behaviour(TicTacToeTestCase):
+	"""Test module objects behave correctly when their methods are called"""
+
+	def setUp(self):
+		super().setUp()
+		self.p2 = tictactoe.Player(self.game)
+
+	def tearDown(self):
+		super().tearDown()
+		self.p2 = None
 
 	def test_legal_move(self):
 		move1 = (0,0)
@@ -61,6 +78,10 @@ class TicTacToeTestCase(unittest.TestCase):
 			self.p2.move(move1)
 		e = cm.exception
 		self.assertEqual(e.msg, "Another player has taken that square already!")
+
+
+class Test_Gameplay(TicTacToeTestCase):
+	"""Tests that the game runs correctly"""
 
 	def test_win_condition(self):
 		moves = [square for square in self.game.board if square[0] == 0]
