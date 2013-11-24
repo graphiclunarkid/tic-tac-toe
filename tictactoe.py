@@ -26,9 +26,9 @@ class Player():
 			self.squares.append(self.game.board.squares.pop(self.game.board.squares.index(square)))
 		except ValueError:
 			if square in self.squares:
-				raise MoveError("You have taken that square already!")
+				raise MoveError("You have taken that square already")
 			elif square in self.game.board.startSquares:
-				raise MoveError("Another player has taken that square already!")
+				raise MoveError("The other player has taken that square already")
 			else:
 				raise MoveError("That square isn't on the board!")
 		else:
@@ -81,3 +81,27 @@ class MoveError(Error):
 	
 	def __init__(self, msg):
 		self.msg = msg
+
+
+def getMove(player):
+	squares = { "1":1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9 }
+	choice = input("Player " + str(player + 1) + ", pick a square (1-9): ")
+	try:
+		return squares[choice]
+	except KeyError:
+		pass
+
+
+if __name__ == '__main__':
+	g = Game()
+	while g.board.turns > 0 and g.winner is None:
+		currentPlayer = 1 - (g.board.turns % g.players)
+		move = getMove(currentPlayer)
+		try:
+			g.playerList[currentPlayer].move(move)
+		except MoveError as e:
+			print(e.msg)
+	if g.winner is None:
+		print("It's a draw!")
+	else:
+		print("Player", currentPlayer + 1, "wins!")
