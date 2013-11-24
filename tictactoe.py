@@ -39,12 +39,17 @@ class Player():
 
 
 class Game():
+
 	def __init__(self, players = 2, cols = 3, rows = 3):
-		self.players = players
 		self.winner = None
 		self.winMoves = frozenset(((0,0),(0,1),(0,2)))
 		self.board = Board(cols,rows)
-		self.playerList = [Player(self) for p in range(self.players)]
+		self.playerList = [Player(self) for p in range(players)]
+
+	def get_players(self):
+		return len(self.playerList)
+
+	players = property(get_players)
 
 
 class Error(Exception):

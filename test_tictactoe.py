@@ -34,7 +34,7 @@ class Test_Structure(TicTacToeTestCase):
 		self.assertEqual(self.game.playerList[0].squares,[])
 
 	def test_game(self):
-		self.assertEqual(len(self.game.playerList),self.players)
+		self.assertEqual(self.game.players,self.players)
 
 class Test_Behaviour(TicTacToeTestCase):
 	"""Test module objects behave correctly when their methods are called"""
