@@ -3,10 +3,8 @@
 
 class Board():
 
-	def __init__(self, cols, rows):
-		self.cols = cols
-		self.rows = rows
-		self.squares = [(x, y) for x in range(cols) for y in range(rows)]
+	def __init__(self):
+		self.squares = [(x, y) for x in range(3) for y in range(3)]
 		self.startSquares = list(self.squares)	# Copies the list rather than creating a second reference to it.
 
 	def get_turns(self):
@@ -40,10 +38,10 @@ class Player():
 
 class Game():
 
-	def __init__(self, players = 2, cols = 3, rows = 3):
+	def __init__(self, players = 2):
 		self.winner = None
 		self.winMoves = frozenset(((0,0),(0,1),(0,2)))
-		self.board = Board(cols,rows)
+		self.board = Board()
 		self.playerList = [Player(self) for p in range(players)]
 
 	def get_players(self):

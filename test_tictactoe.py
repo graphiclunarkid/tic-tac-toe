@@ -10,9 +10,7 @@ class TicTacToeTestCase(unittest.TestCase):
 
 	def setUp(self, players = 1):
 		self.players = players
-		self.cols = 3
-		self.rows = 3
-		self.game = tictactoe.Game(self.players, self.cols, self.rows)
+		self.game = tictactoe.Game(self.players)
 
 	def tearDown(self):
 		self.game = None
@@ -25,9 +23,7 @@ class Test_Structure(TicTacToeTestCase):
 
 	def test_board(self):
 		self.assertIsInstance(self.game.board,tictactoe.Board)
-		self.assertEqual(self.game.board.cols,self.cols)
-		self.assertEqual(self.game.board.rows,self.rows)
-		self.assertEqual(self.game.board.turns,(self.cols*self.rows))
+		self.assertEqual(self.game.board.turns,9)
 
 	def test_player(self):
 		self.assertIsInstance(self.game.playerList[0],tictactoe.Player)
@@ -35,6 +31,7 @@ class Test_Structure(TicTacToeTestCase):
 
 	def test_game(self):
 		self.assertEqual(self.game.players,self.players)
+
 
 class Test_Behaviour(TicTacToeTestCase):
 	"""Test module objects behave correctly when their methods are called"""
@@ -45,7 +42,7 @@ class Test_Behaviour(TicTacToeTestCase):
 	def test_legal_move(self):
 		move1 = (0,0)
 		self.game.playerList[0].move(move1)
-		self.assertEqual(self.game.board.turns,(self.cols*self.rows - 1))
+		self.assertEqual(self.game.board.turns,8)
 		self.assertEqual(len(self.game.playerList[0].squares),1)
 		self.assertListEqual(self.game.playerList[0].squares, [move1])
 		self.assertListEqual(self.game.board.squares,[(0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)])
