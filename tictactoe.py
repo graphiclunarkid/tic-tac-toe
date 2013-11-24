@@ -44,6 +44,7 @@ class Game():
 		self.winner = None
 		self.winMoves = frozenset(((0,0),(0,1),(0,2)))
 		self.board = Board(cols,rows)
+		self.playerList = [Player(self) for p in range(self.players)]
 
 
 class Error(Exception):
