@@ -6,7 +6,17 @@ import tictactoe
 
 
 class TicTacToeTestCase(unittest.TestCase):
-	"""Base class for test cases in this module"""
+
+	""" Base class for structure and behaviour test-case classes in this
+	module.
+
+	Methods:
+		setUp -- Creates a tictactoe game instance with the specified
+		number of players
+	
+		tearDown -- Makes sure the game instance is destroyed between
+		tests.
+	"""
 
 	def setUp(self, players = 1):
 		self.players = players
@@ -17,8 +27,19 @@ class TicTacToeTestCase(unittest.TestCase):
 
 
 class Test_Structure(TicTacToeTestCase):
-	"""TDD: build objects needed for this module
-	These tests aren't very useful any more but cost nothing to keep
+
+	""" Test class that helped in building objects needed for this module.
+	These tests aren't very useful any more but cost nothing to keep.
+
+	Methods:
+		test_board -- Tests that the Board class can be instantiated
+		and that it has 9 turns (3x3 grid).
+
+		test_player -- Tests that the Player class can be instantiated
+		and that it starts with an empty set of picked squares.
+
+		test_game -- Tests that the Game class can be instantiated and
+		that it creates the correct number of players.
 	"""
 
 	def test_board(self):
@@ -34,7 +55,30 @@ class Test_Structure(TicTacToeTestCase):
 
 
 class Test_Behaviour(TicTacToeTestCase):
-	"""Test module objects behave correctly when their methods are called"""
+
+	""" Test module objects behave correctly when their methods are called
+	
+	Methods:
+		setUp -- Overrides base class setUp to instantiate a two-player game.
+
+		test_legal_move -- Tests that a legal move can be made.
+		Makes sure that a move decrements the number of turns left in
+		the game, increments the number of squares picked by the
+		player, that the player's list of picked squares contains the
+		square just picked, and that the list of remaining squares does
+		not.
+
+		test_illegal_move -- checks that passing an illegal square to
+		the move method raises an exception with an appropriate
+		message.
+		
+		test_repeat_move_same_player -- Checks that a player can't pick
+		the same square twice (appropriate message if they try).
+		
+		test_repeat_move_other_player -- Checks that a player can't
+		pick a square that has been picked by another player already
+		(appropriate message if they try).
+	"""
 
 	def setUp(self):
 		super().setUp(2)
@@ -72,7 +116,38 @@ class Test_Behaviour(TicTacToeTestCase):
 
 
 class Test_Gameplay(unittest.TestCase):
-	"""Tests that the game runs correctly"""
+	""" Tests that the game runs correctly.
+	Actually just tests that win and draw conditions are correct at the
+	moment.
+	TODO: Test that turns alternate correctly
+	NOTE: This class is not a subclass of TicTacToeTestCase
+
+	Methods:
+		setUp -- Preate an empty list of moves
+
+		doMoves -- Perform a predetermined list of moves and test that
+		the win condition is detected. Creates a new game object for
+		each sequence of moves.
+
+		test_win_conditions_rows -- Check that picking all squares in a
+		row wins the game.
+
+		test_win_conditions_cols -- Check that picking all squares in a
+		column wins the game.
+
+		test_win_conditions_diags -- Check that picking all squares in
+		a diagonal line wins the game.
+
+		test_win_conditions_reverse -- Check that the game can be won
+		regardless of the order in which squares are picked.
+
+		test_win_conditions_long -- Check that move sequences longer
+		than winning lines result in winning the game.
+
+		test_draw_conditions -- Check that max-length move sequences
+		that don't contain a win line do not win the game (a draw by
+		inference)
+	"""
 
 	def setUp(self):
 		self.moveList = []

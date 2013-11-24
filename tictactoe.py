@@ -6,13 +6,13 @@ class Board():
 	""" A class to represent a tic-tac-toe board, which comprises 9 squares
 
 	Attributes:
+		squares -- List of squares that are available to be picked.
 
-		squares		List of squares that are available to be
-				picked.
-		startSquares	List of squares that were available when the
-				game started.
-		turns		The max number of turns remaining (number of
-				squares left to be picked).
+		startSquares -- List of squares that were available when the
+		game started.
+
+		turns -- The max number of turns remaining (number of squares
+		left to be picked).
 	"""
 
 	def __init__(self):
@@ -30,16 +30,13 @@ class Player():
 	""" A class to represent a player.
 
 	Attributes:
-
-		squares		The set of squares this player has picked.
+		squares -- The set of squares this player has picked.
 
 	Methods:
-
-		move()		Attempt to pick the specified square.
-				Throws a MoveError exception if the square
-				doesn't exist or has been taken already.  Sets
-				the player as the game winner if their set of
-				picked squares contains a winning line.
+		move -- Attempt to pick the specified square.  Throws a
+		MoveError exception if the square doesn't exist or has been
+		taken already.  Sets the player as the game winner if their set
+		of picked squares contains a winning line.
 	"""
 
 	def __init__(self, game, squares = None):
@@ -70,16 +67,17 @@ class Game():
 	""" A class to represent a game of tic-tac-toe.
 
 	Attributes:
+		winner -- The player object that has won the game.
 
-		winner		The player object that has won the game.
-		board		Object containing the playing surface
-		players		The number of players involved in this game.
-				(Two for real games, but some of the tests use
-				a single player)
-		playerList	List of player objects involved in this game.
-		winMoves	List of lists representing all possible winning
-				combinations of squares (rows, columns and
-				diagonals.)
+		board -- Object containing the playing surface
+
+		players -- The number of players involved in this game. (Two
+		for real games, but some of the tests use a single player)
+
+		playerList -- List of player objects involved in this game.
+
+		winMoves -- List of lists representing all possible winning
+		combinations of squares (rows, columns and diagonals.)
 	"""
 
 	def __init__(self, players = 2):
@@ -111,8 +109,7 @@ class Game():
 
 class Error(Exception):
 
-	"""
-	Base class for exceptions in this module.
+	""" Base class for exceptions in this module.
 	"""
 	
 	pass
@@ -120,11 +117,10 @@ class Error(Exception):
 
 class MoveError(Error):
 
-	"""
-	Exception raised for invalid player moves.
+	""" Exception raised for invalid player moves.
 
 	Attributes:
-		msg	Explanation of the error.
+		msg -- Explanation of the error.
 	"""
 	
 	def __init__(self, msg):
@@ -133,12 +129,15 @@ class MoveError(Error):
 
 def getMove(player):
 
-	"""
-	A function to prompt players for their moves.
+	""" A function to prompt players for their moves.
 	
 	If the player picks a move not in the "squares" list a KeyError
 	exception is thrown however we pass this so that the MoveError
 	exception will be thrown by the Player.move() method instead.
+
+	Returns:
+		The user's input, converted to an integer if it represented a
+		valid square.
 	"""
 
 	squares = { "1":1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9 }
@@ -151,8 +150,7 @@ def getMove(player):
 
 if __name__ == '__main__':
 
-	"""
-	This is the main game loop.
+	""" This is the main game loop.
 
 	Process:
 		1. Create a new game with two players
