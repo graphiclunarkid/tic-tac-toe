@@ -23,14 +23,14 @@ class Test_Structure(TicTacToeTestCase):
 
 	def test_board(self):
 		self.assertIsInstance(self.game.board,tictactoe.Board)
-		self.assertEqual(self.game.board.turns,9)
+		self.assertEqual(self.game.board.turns, 9)
 
 	def test_player(self):
-		self.assertIsInstance(self.game.playerList[0],tictactoe.Player)
-		self.assertEqual(self.game.playerList[0].squares,[])
+		self.assertIsInstance(self.game.playerList[0], tictactoe.Player)
+		self.assertEqual(self.game.playerList[0].squares, [])
 
 	def test_game(self):
-		self.assertEqual(self.game.players,self.players)
+		self.assertEqual(self.game.players, self.players)
 
 
 class Test_Behaviour(TicTacToeTestCase):
@@ -42,10 +42,10 @@ class Test_Behaviour(TicTacToeTestCase):
 	def test_legal_move(self):
 		move1 = 1
 		self.game.playerList[0].move(move1)
-		self.assertEqual(self.game.board.turns,8)
-		self.assertEqual(len(self.game.playerList[0].squares),1)
+		self.assertEqual(self.game.board.turns, 8)
+		self.assertEqual(len(self.game.playerList[0].squares), 1)
 		self.assertListEqual(self.game.playerList[0].squares, [move1])
-		self.assertListEqual(self.game.board.squares,[ 2, 3, 4, 5, 6, 7, 8, 9 ])
+		self.assertListEqual(self.game.board.squares, [ 2, 3, 4, 5, 6, 7, 8, 9 ])
 
 	def test_illegal_move(self):
 		move1 = 0
@@ -71,14 +71,54 @@ class Test_Behaviour(TicTacToeTestCase):
 		self.assertEqual(e.msg, "Another player has taken that square already!")
 
 
-class Test_Gameplay(TicTacToeTestCase):
+class Test_Gameplay(unittest.TestCase):
 	"""Tests that the game runs correctly"""
 
-	def test_win_condition(self):
-		moves = [ 1, 2, 3 ]
-		for move in moves:
-			self.game.playerList[0].move(move)
-		self.assertIs(self.game.playerList[0],self.game.winner)
+	def setUp(self):
+		self.moveList = []
+
+	def doMoves(self):
+		for moves in self.moveList:
+			g = tictactoe.Game(1)
+			for move in moves:
+				g.playerList[0].move(move)
+			self.assertIs(g.playerList[0], g.winner)
+			g = None
+
+	def test_win_conditions_rows(self):
+
+		# Horizontal rows
+		self.moveList.append( [ 1, 2, 3 ] )
+		self.moveList.append( [ 4, 5, 6 ] )
+		self.moveList.append( [ 7, 8, 9 ] )
+		self.doMoves()
+
+	def test_win_conditions_cols(self):
+		# Vertical columns
+		self.moveList.append( [ 1, 4, 7 ] )
+		self.moveList.append( [ 2, 5, 8 ] )
+		self.moveList.append( [ 3, 6, 9 ] )
+		self.doMoves()
+
+	def test_win_conditions_diags(self):
+		# Diagonals
+		self.moveList.append( [ 1, 5, 9 ] )
+		self.moveList.append( [ 3, 5, 7 ] )
+		self.doMoves()
+
+	def test_win_conditions_reverse(self):
+		# Reversed rows/cols/diags to check order is unimportant
+		self.moveList.append( [ 2, 3, 1 ] )
+		self.moveList.append( [ 8, 5, 2 ] )
+		self.moveList.append( [ 9, 5, 1 ] )
+		self.doMoves()
+
+	def test_win_conditions_long(self):
+		# Longer move sequences containing winning sets
+		self.moveList.append( [ 9, 1, 6, 7, 3, 2 ] )
+#		self.moveList.append( [ 1, 3, 7, 9, 5] )
+#		self.moveList.append( [ 2, 4, 6, 8, 9, 5] )
+		self.doMoves()
 
 
 if __name__ == '__main__':

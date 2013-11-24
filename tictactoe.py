@@ -32,17 +32,34 @@ class Player():
 			else:
 				raise MoveError("That square isn't on the board!")
 		else:
-			if set(self.squares) == self.game.winMoves:
-				self.game.winner = self
+			s = set(self.squares)
+			for line in self.game.winMoves:
+				if set(line).issubset(s):
+					self.game.winner = self
 
 
 class Game():
 
 	def __init__(self, players = 2):
 		self.winner = None
-		self.winMoves = frozenset( (1, 2, 3) )
 		self.board = Board()
 		self.playerList = [Player(self) for p in range(players)]
+
+		self.winMoves = []
+
+		# Horizontal rows
+		self.winMoves.append( [ 1, 2, 3 ] ) 
+		self.winMoves.append( [ 4, 5, 6 ] ) 
+		self.winMoves.append( [ 7, 8, 9 ] ) 
+
+		# Vertical columns
+		self.winMoves.append( [ 1, 4, 7 ] ) 
+		self.winMoves.append( [ 2, 5, 8 ] ) 
+		self.winMoves.append( [ 3, 6, 9 ] ) 
+
+		# Diagonals
+		self.winMoves.append( [ 1, 5, 9 ] ) 
+		self.winMoves.append( [ 3, 5, 7 ] ) 
 
 	def get_players(self):
 		return len(self.playerList)
