@@ -13,10 +13,12 @@ class TicTacToeTestCase(unittest.TestCase):
 		self.rows = 3
 		self.game = tictactoe.Game(self.players, self.cols, self.rows)
 		self.p1 = tictactoe.Player(self.game)
+		self.p2 = tictactoe.Player(self.game)
 
 	def tearDown(self):
 		self.game = None
 		self.p1 = None
+		self.p2 = None
 
 	def test_game(self):
 		self.assertIsInstance(self.game,tictactoe.Game)
@@ -44,13 +46,21 @@ class TicTacToeTestCase(unittest.TestCase):
 		e = cm.exception
 		self.assertEqual(e.msg, "That square isn't on the board!")
 
-	def test_repeat_move(self):
+	def test_repeat_move_same_player(self):
 		move1 = (0,0)
 		with self.assertRaises(tictactoe.MoveError) as cm:
 			self.p1.move(move1)
 			self.p1.move(move1)
 		e = cm.exception
 		self.assertEqual(e.msg, "You have taken that square already!")
+
+	def test_repeat_move_other_player(self):
+		move1 = (0,0)
+		with self.assertRaises(tictactoe.MoveError) as cm:
+			self.p1.move(move1)
+			self.p2.move(move1)
+		e = cm.exception
+		self.assertEqual(e.msg, "Another player has taken that square already!")
 
 	def test_win_condition(self):
 		moves = [square for square in self.game.board if square[0] == 0]

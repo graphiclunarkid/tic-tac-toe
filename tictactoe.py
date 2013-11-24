@@ -8,8 +8,9 @@ class Game():
 		self.cols = cols
 		self.rows = rows
 		self.board = [(x, y) for x in range(cols) for y in range(rows)]
+		self.startBoard = list(self.board)	# Copies the list rather than creating a second reference to it.
 		self.winner = None
-		self.winmoves = frozenset(((0,0),(0,1),(0,2)))
+		self.winMoves = frozenset(((0,0),(0,1),(0,2)))
 
 	def get_turns(self):
 		return len(self.board)
@@ -31,10 +32,12 @@ class Player():
 		except ValueError:
 			if square in self.squares:
 				raise MoveError("You have taken that square already!")
+			elif square in self.game.startBoard:
+				raise MoveError("Another player has taken that square already!")
 			else:
 				raise MoveError("That square isn't on the board!")
 		else:
-			if set(map(tuple, self.squares)) == self.game.winmoves:
+			if set(map(tuple, self.squares)) == self.game.winMoves:
 				self.game.winner = self
 
 
